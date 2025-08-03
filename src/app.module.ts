@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BalanceModule } from './balance/balance.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Balance } from './balance/entity/balance.entity';
+import { BalanceGame } from './balance/entity/balanceGame.entity';
 import { Choice } from './balance/entity/choice.entity';
 
 @Module({
@@ -15,7 +15,7 @@ import { Choice } from './balance/entity/choice.entity';
         username: 'root',
         password: '1234',
         database: 'balance_db',
-        entities: [Balance, Choice],
+        entities: [BalanceGame, Choice],
         synchronize: true,
       }),
       BalanceModule],

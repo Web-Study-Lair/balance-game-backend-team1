@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Choice } from "./choice.entity";
 
 @Entity()
-export class Balance {
+export class BalanceGame {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -12,7 +12,7 @@ export class Balance {
     @Column({default: false})
     isActive: boolean;
 
-    @OneToMany(() => Choice, (choice) => choice.balance, { cascade: true, eager: true })
+    @OneToMany(() => Choice, (choice) => choice.balanceGame, { cascade: true, eager: true })
     choices: Choice[];
 
 }
