@@ -1,25 +1,33 @@
-import { Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
-import { BalanceGame } from "./balanceGame.entity";
-import { Exclude } from "class-transformer";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { BalanceGame } from './balanceGame.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class Choice {
-    @PrimaryGeneratedColumn()
-    @Exclude()
-    index: number;
+  @PrimaryGeneratedColumn()
+  @Exclude()
+  index: number;
 
-    @Column({nullable: true })
-    id?: number;
+  @Column({ nullable: true })
+  id?: number;
 
-    @Column({ type: 'text', nullable: true })
-    imageUrl: string | null;
+  @Column({ type: 'text', nullable: true })
+  imageUrl: string | null;
 
-    @Column()
-    description: string;
+  @Column()
+  description: string;
 
-    @Column({ default: 0 })
-    count: number;
+  @Column({ default: 0 })
+  count: number;
 
-    @ManyToOne(() => BalanceGame, (balanceGame) => balanceGame.choices, { onDelete: 'CASCADE' })
-    balanceGame: BalanceGame;
+  @ManyToOne(() => BalanceGame, (balanceGame) => balanceGame.choices, {
+    onDelete: 'CASCADE',
+  })
+  balanceGame: BalanceGame;
 }
