@@ -16,7 +16,7 @@ import { Choice } from './balance/entity/choice.entity';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: [BalanceGame, Choice],
-      synchronize: true,
+      synchronize: false,
     }),
     BalanceModule,
   ],
