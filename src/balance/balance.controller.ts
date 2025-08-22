@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, PayloadTooLargeException, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, PayloadTooLargeException, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { CreateGameDto } from './DTO/CreateGameDto';
+import { CreateChoiceDto } from './DTO/CreateChoiceDto';
 import { BalanceService } from './balance.service';
 import { FileFieldsInterceptor, FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/common/config/multer.config';
@@ -10,20 +11,35 @@ export class BalanceController {
 
     @Post('upload')
     @UseInterceptors(FileFieldsInterceptor(
-        [{name: 'images', maxCount: 2,}],
+        [
+        {name: 'images1', maxCount: 1 },
+        {name: 'images2', maxCount: 1 }
+        ],
         multerOptions)
     )
-    async createGame(@UploadedFiles() files: { images?: Express.Multer.File[] },
-    @Body() body: any,) 
+    async createGame(
+        
+    @UploadedFiles() files: { images1?: Express.Multer.File; images2?: Express.Multer.File },
+    @Body('createGameDto') createGame: string,) 
     {
-        const images = files.images || [];
-        const createGameDto: CreateGameDto = JSON.parse(body.game);
-        return await this.balanceService.createGame(createGameDto, images);
+        const createGameDto: CreateGameDto = JSON.parse(createGame)
+        return this.balanceService.createGame(
+            createGameDto,
+            files.images1?.[0] ?? null,
+            files.images2?.[0] ?? null,
+        );
     }
 
     @Get()
     async getAllGames() {
         return await this.balanceService.findAll();
+    }
+
+    @Get('random')
+    async getGame() {
+        const balancegame = await this.balanceService.getGame();
+        if (!balancegame) throw new NotFoundException('남은 게임이 없습니다.');
+        return balancegame;
     }
 
     @Delete(':id')

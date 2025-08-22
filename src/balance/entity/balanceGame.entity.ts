@@ -9,7 +9,7 @@ export class BalanceGame {
     @Column()
     title: string;
 
-    @Column({default: false})
+    @Column({default: true})
     isActive: boolean;
 
     @OneToMany(() => Choice, (choice) => choice.balanceGame, { cascade: true, eager: true })
