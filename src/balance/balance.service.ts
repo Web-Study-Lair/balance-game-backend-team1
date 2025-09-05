@@ -59,7 +59,7 @@ export class BalanceService implements OnModuleInit{
         return selectedId;
     }
 
-    // 외부 제공 함수
+    // 
     async getGame(): Promise<BalanceGame | null> {
         console.log('Unused : ', this.cachedGameIds);
         console.log('Used : ', this.usedGameIds);
@@ -74,6 +74,23 @@ export class BalanceService implements OnModuleInit{
             where: { id },
             relations: ['choices'],
         });
+    }
+
+    async choose(gameId: number, choiceId: number) {
+        // const game = await this.gameRepository.findOne({
+        //     where: { id: gameId },
+        //     relations: ['choices'],
+        // });
+        
+        if (choiceId !== 0) {
+            await this.choiceRepository.increment(
+            { balanceGame: {id: gameId }, index: choiceId },
+            'count',
+            1,
+            );
+        }
+
+        return await this.getGame();
     }
 
 
