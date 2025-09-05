@@ -5,9 +5,15 @@ export class CreateChoiceDto {
   @Exclude()
   index: number;
 
+<<<<<<< HEAD
+    @IsNotEmpty({ message: '모든 선택지에 설명을 추가해주세요.'})
+    @IsString()
+    description?: string;
+=======
   @IsOptional()
   @IsString()
   imageUrl?: string;
+>>>>>>> origin/main
 
   @IsNotEmpty({ message: '모든 선택지에 설명을 추가해주세요.' })
   @IsString()
